@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="skyzofresnes.boardgamizer.BoardgameChooseActivity">
+    tools:context="BoardgameChooseActivity">
 
     <LinearLayout
         style="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
