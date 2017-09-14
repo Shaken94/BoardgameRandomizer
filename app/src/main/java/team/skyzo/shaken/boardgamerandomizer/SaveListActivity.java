@@ -31,9 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SaveListActivity extends AppCompatActivity {
-    final List<CharacterModel> characterModels = new ArrayList<>();  // Where we track the selected items
-    final List<CharacterModel> mSelectedCharacters = new ArrayList<>();  // Where we track the selected items
-    final FiltersModel filtersModel = new FiltersModel();   // where we track the different string for the filter
+    private final List<CharacterModel> characterModels = new ArrayList<>();  // Where we track the selected items
+    private final List<CharacterModel> mSelectedCharacters = new ArrayList<>();  // Where we track the selected items
+    private final FiltersModel filtersModel = new FiltersModel();   // where we track the different string for the filter
     private ListView saveListViewCharacter;
     private SaveListAdapter saveListViewCharacterAdapter = null;
 
@@ -133,11 +133,11 @@ public class SaveListActivity extends AppCompatActivity {
         View inflate = getLayoutInflater().inflate(R.layout.alertdialog_filters, null);
 
         //Get all objects in inflate
-        final EditText inputName = (EditText) inflate.findViewById(R.id.inputName);
-        final ExpandableListView expandableListView = (ExpandableListView) inflate.findViewById(R.id.expandableListViewFilters);
-        final ImageButton btnEraseAll = (ImageButton) inflate.findViewById(R.id.button_erase_all);
-        final ImageButton btnCancel = (ImageButton) inflate.findViewById(R.id.button_cancel);
-        final ImageButton btnOk = (ImageButton) inflate.findViewById(R.id.button_ok);
+        final EditText inputName = inflate.findViewById(R.id.inputName);
+        final ExpandableListView expandableListView = inflate.findViewById(R.id.expandableListViewFilters);
+        final ImageButton btnEraseAll = inflate.findViewById(R.id.button_erase_all);
+        final ImageButton btnCancel = inflate.findViewById(R.id.button_cancel);
+        final ImageButton btnOk = inflate.findViewById(R.id.button_ok);
 
         final HashMap<String, List<String>> expandableListDetail = filtersModel.getFilters();
         final List<String> expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
@@ -300,7 +300,7 @@ public class SaveListActivity extends AppCompatActivity {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         // Add action buttons
-        ImageButton btnCancel = (ImageButton) inflate.findViewById(R.id.button_cancel);
+        ImageButton btnCancel = inflate.findViewById(R.id.button_cancel);
         btnCancel.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 //close the keyboard automatically
@@ -309,14 +309,14 @@ public class SaveListActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton btnOk = (ImageButton) inflate.findViewById(R.id.button_ok);
+        final ImageButton btnOk = inflate.findViewById(R.id.button_ok);
         // Initially disable the button
         btnOk.setEnabled(false);
         btnOk.setVisibility(View.INVISIBLE);
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                EditText inputFilename = (EditText) inflate.findViewById(R.id.inputFilename);
+                EditText inputFilename = inflate.findViewById(R.id.inputFilename);
                 String filenameChosen = inputFilename.getText().toString();
                 if (!TextUtils.isEmpty(filenameChosen)) {
                     File rootDir = new File(getFilesDir(), boardgameMini);
@@ -346,7 +346,7 @@ public class SaveListActivity extends AppCompatActivity {
             }
         });
 
-        EditText inputFilename = (EditText) inflate.findViewById(R.id.inputFilename);
+        EditText inputFilename = inflate.findViewById(R.id.inputFilename);
         inputFilename.requestFocus();
         inputFilename.setTextColor(Color.BLACK);
         inputFilename.addTextChangedListener(new TextWatcher() {

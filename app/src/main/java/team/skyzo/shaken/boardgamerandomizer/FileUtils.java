@@ -18,11 +18,8 @@ import java.util.List;
 public final class FileUtils {
 
     public static List<CharacterModel> readJsonStream(InputStream in) throws IOException {
-        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-        try {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"))) {
             return readCharacterModelsArray(reader);
-        } finally {
-            reader.close();
         }
     }
 
@@ -51,18 +48,25 @@ public final class FileUtils {
         reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
-            if (name.equals(Constantes.CHARACTER_NAME)) {
-                nameCharacter = reader.nextString();
-            } else if (name.equals(Constantes.CHARACTER_GENDER)) {
-                gender = reader.nextString();
-            } else if (name.equals(Constantes.CHARACTER_ORIGIN)) {
-                origin = reader.nextString();
-            } else if (name.equals(Constantes.CHARACTER_TYPE)) {
-                type = reader.nextString();
-            } else if (name.equals(Constantes.CHARACTER_IMAGE)) {
-                image = reader.nextString();
-            } else {
-                reader.skipValue();
+            switch (name) {
+                case Constantes.CHARACTER_NAME:
+                    nameCharacter = reader.nextString();
+                    break;
+                case Constantes.CHARACTER_GENDER:
+                    gender = reader.nextString();
+                    break;
+                case Constantes.CHARACTER_ORIGIN:
+                    origin = reader.nextString();
+                    break;
+                case Constantes.CHARACTER_TYPE:
+                    type = reader.nextString();
+                    break;
+                case Constantes.CHARACTER_IMAGE:
+                    image = reader.nextString();
+                    break;
+                default:
+                    reader.skipValue();
+                    break;
             }
         }
         reader.endObject();
@@ -92,14 +96,11 @@ public final class FileUtils {
         writer.name(Constantes.CHARACTER_TYPE).value(characterModel.getType());
         writer.name(Constantes.CHARACTER_IMAGE).value(characterModel.getImage());
         writer.endObject();
-    };
+    }
 
     public static int countInJsonStream(InputStream in) throws IOException {
-        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-        try {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"))) {
             return getJsonArraySize(reader);
-        } finally {
-            reader.close();
         }
     }
 

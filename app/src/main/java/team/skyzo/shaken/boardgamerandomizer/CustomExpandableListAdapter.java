@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
-    private Context context;
-    private List<String> expandableListTitle;
-    private HashMap<String, List<String>> expandableListDetail;
+    private final Context context;
+    private final List<String> expandableListTitle;
+    private final HashMap<String, List<String>> expandableListDetail;
     private ArrayList<ArrayList<Integer>> check_states = new ArrayList<>();
 
     public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
@@ -26,14 +26,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
-        this.check_states = check_states;
-    }
-
-    public ArrayList<ArrayList<Integer>> getCheck_states() {
-        return check_states;
-    }
-
-    public void setCheck_states(ArrayList<ArrayList<Integer>> check_states) {
         this.check_states = check_states;
     }
 
@@ -54,20 +46,18 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         final String expandedListChildText = (String) getChild(listPosition, expandedListPosition);
         final int expandedListTextInt = this.context.getResources().getIdentifier(Constantes.VALUE_STRING + expandedListChildText.substring(1), Constantes.VALUE, this.context.getPackageName());
         final String expandedListText = this.context.getString(expandedListTextInt);
-        final int grpPos = listPosition;
-        final int childPos = expandedListPosition;
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
 
-        TextView expandedListTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
-        ImageView checkBoxItemFilters = (ImageView) convertView.findViewById((R.id.checkBox_itemFilters));
+        TextView expandedListTextView = convertView.findViewById(R.id.expandedListItem);
+        ImageView checkBoxItemFilters = convertView.findViewById((R.id.checkBox_itemFilters));
 
         expandedListTextView.setText(expandedListText);
 
-        if(check_states.get(grpPos).get(childPos) == 1) {
+        if(check_states.get(listPosition).get(expandedListPosition) == 1) {
             expandedListTextView.setTextColor(Color.RED);
             checkBoxItemFilters.setBackgroundResource(R.drawable.checked);
         }else {
@@ -105,11 +95,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_group, null);
         }
-        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
+        TextView listTitleTextView = convertView.findViewById(R.id.listTitle);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
         listTitleTextView.setText(listTitle);
 
-        ImageView imgViewGroupFilters = (ImageView) convertView.findViewById(R.id.imageView_groupFilters);
+        ImageView imgViewGroupFilters = convertView.findViewById(R.id.imageView_groupFilters);
 
         if (isExpanded){
             imgViewGroupFilters.setBackgroundResource(R.drawable.collapse);

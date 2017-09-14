@@ -19,10 +19,10 @@ import java.util.List;
  */
 
 public class SaveListAdapter extends BaseAdapter {
-    private Activity activity;
+    private final Activity activity;
     private List<CharacterModel> filterCharacters;
-    private List<CharacterModel> originalCharacters;
-    private LayoutInflater inflater;
+    private final List<CharacterModel> originalCharacters;
+    private final LayoutInflater inflater;
 
     public SaveListAdapter(Activity activity, List<CharacterModel> characters) {
         this.activity = activity;
@@ -54,19 +54,19 @@ public class SaveListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolder holder;
 
         if (view == null){
             view = inflater.inflate(R.layout.savelist_listview_item, viewGroup, false);
 
             holder = new ViewHolder();
 
-            holder.checked = (ImageView) view.findViewById(R.id.check_box);
-            holder.name = (TextView)view.findViewById(R.id.name);
-            holder.gender = (TextView) view.findViewById(R.id.gender);
-            holder.origin = (TextView) view.findViewById(R.id.origin);
-            holder.type = (TextView) view.findViewById(R.id.type);
-            holder.imgCharacter = (ImageView) view.findViewById(R.id.imgCharacter);
+            holder.checked = view.findViewById(R.id.check_box);
+            holder.name = view.findViewById(R.id.name);
+            holder.gender = view.findViewById(R.id.gender);
+            holder.origin = view.findViewById(R.id.origin);
+            holder.type = view.findViewById(R.id.type);
+            holder.imgCharacter = view.findViewById(R.id.imgCharacter);
 
             view.setTag(holder);
         }else

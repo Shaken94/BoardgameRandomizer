@@ -24,13 +24,9 @@ import java.util.List;
 
 public final class FilenameListAdapter extends BaseAdapter {
 
-    Activity activity;
-    List<String> filenameList;
-    LayoutInflater inflater;
-
-    public FilenameListAdapter(Activity activity) {
-        this.activity = activity;
-    }
+    private final Activity activity;
+    private List<String> filenameList;
+    private final LayoutInflater inflater;
 
     public FilenameListAdapter(Activity activity, List<String> filenameList) {
         this.activity   = activity;
@@ -56,7 +52,7 @@ public final class FilenameListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
 
-        ViewHolder holder = null;
+        ViewHolder holder;
         Resources resources = activity.getResources();
         String packageName = activity.getPackageName();
         String boardgameMini = ((FilenameListActivity) activity).getBoardgameMini();
@@ -67,8 +63,8 @@ public final class FilenameListAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
 
-            holder.filename = (TextView)view.findViewById(R.id.filename);
-            holder.nbCharacters = (TextView)view.findViewById(R.id.nb_characters);
+            holder.filename = view.findViewById(R.id.filename);
+            holder.nbCharacters = view.findViewById(R.id.nb_characters);
 
             view.setTag(holder);
         }else
@@ -83,7 +79,7 @@ public final class FilenameListAdapter extends BaseAdapter {
         if (filename.equals(boardgameMini + Constantes.UNDERSCORE + Constantes.ALL) || filename.equals(boardgameMini + Constantes.UNDERSCORE + Constantes.ALL_MONSTERS)) {
             final String identifier = resources.getString(resources.getIdentifier(Constantes.VALUE_STRING + Constantes.ALL, Constantes.VALUE, packageName));
 
-            String characters = null;
+            String characters;
 
             if (filename.contains(Constantes.MONSTERS)) {
                 final String name = Constantes.VALUE_STRING + boardgameMini + Constantes.UNDERSCORE + Constantes.MONSTERS;
@@ -117,7 +113,7 @@ public final class FilenameListAdapter extends BaseAdapter {
                 iStream = resources.openRawResource(resourceId);
             }
 
-            String name = null;
+            String name;
             if (filename.toLowerCase().equals(boardgameMini + Constantes.UNDERSCORE + Constantes.ALL_MONSTERS) || filename.toLowerCase().startsWith(Constantes.AROBASE + Constantes.MONSTERS)){
                 name = Constantes.VALUE_PLURALS + boardgameMini + Constantes.NB_MONSTERS;
             }else{

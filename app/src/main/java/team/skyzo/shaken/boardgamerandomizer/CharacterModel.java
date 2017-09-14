@@ -12,9 +12,6 @@ public class CharacterModel {
     private String image = null;
     private boolean selected = false;
 
-    public CharacterModel() {
-    }
-
     public CharacterModel(String name, String gender, String origin, String type, String image) {
         this.name = name;
         this.gender = gender;
@@ -27,40 +24,20 @@ public class CharacterModel {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getGender() {
         return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getOrigin() {
         return origin;
     }
 
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getImage() {
         return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public boolean isSelected() {

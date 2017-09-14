@@ -18,13 +18,9 @@ import java.util.List;
 
 public class CharacterListAdapter extends BaseAdapter {
 
-    Activity activity;
-    List<CharacterModel> characters;
-    LayoutInflater inflater;
-
-    public CharacterListAdapter(Activity activity) {
-        this.activity = activity;
-    }
+    private final Activity activity;
+    private List<CharacterModel> characters;
+    private final LayoutInflater inflater;
 
     public CharacterListAdapter(Activity activity, List<CharacterModel> characters) {
         this.activity   = activity;
@@ -50,16 +46,16 @@ public class CharacterListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
 
-        ViewHolder holder = null;
+        ViewHolder holder;
 
         if (view == null){
             view = inflater.inflate(R.layout.character_listview_item, viewGroup, false);
 
             holder = new ViewHolder();
-            holder.name = (TextView)view.findViewById(R.id.name);
-            holder.origin = (TextView) view.findViewById(R.id.origin);
-            holder.type = (TextView) view.findViewById(R.id.type);
-            holder.imgCharacter = (ImageView) view.findViewById(R.id.imgCharacter);
+            holder.name = view.findViewById(R.id.name);
+            holder.origin = view.findViewById(R.id.origin);
+            holder.type = view.findViewById(R.id.type);
+            holder.imgCharacter = view.findViewById(R.id.imgCharacter);
 
             view.setTag(holder);
         }else

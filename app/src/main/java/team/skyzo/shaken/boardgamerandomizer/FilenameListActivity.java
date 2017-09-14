@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ import java.util.List;
  */
 
 public class FilenameListActivity extends AppCompatActivity {
-    private List<String> filenameList = new ArrayList<>();
+    private final List<String> filenameList = new ArrayList<>();
     private ListView listViewFilenameList;
     private String boardgame = null;
     private String boardgameMini = null;
@@ -60,10 +59,6 @@ public class FilenameListActivity extends AppCompatActivity {
         return boardgameMini;
     }
 
-    public FilenameListAdapter getListViewFilenameAdapter() {
-        return listViewFilenameAdapter;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SAVE_FILE_REQUEST) {
@@ -89,8 +84,8 @@ public class FilenameListActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
             Field[] fields = R.raw.class.getFields();
 
-            for(int count=0; count < fields.length; count++){
-                String filename = fields[count].getName();
+            for (Field field : fields) {
+                String filename = field.getName();
                 if (filename.contains(boardgameMini)) {
                     filenameList.add(filename);
                 }
@@ -100,8 +95,8 @@ public class FilenameListActivity extends AppCompatActivity {
             File[] listFile = rootDir.listFiles();
 
             if (null != listFile) {
-                for (int count = 0; count < listFile.length; count++) {
-                    String filename = listFile[count].getName();
+                for (File aListFile : listFile) {
+                    String filename = aListFile.getName();
                     filenameList.add(filename);
                 }
             }
@@ -146,7 +141,7 @@ public class FilenameListActivity extends AppCompatActivity {
                         final View inflate = inflater.inflate(R.layout.alertdialog_save_input_filename, null);
 
                         // Don't display the editText
-                        ((EditText) inflate.findViewById(R.id.inputFilename)).setVisibility(View.GONE);
+                        inflate.findViewById(R.id.inputFilename).setVisibility(View.GONE);
                         builder.setView(inflate)
                                 .setTitle(R.string.alert_dialog_delete_title)
                                 .setMessage(R.string.alert_dialog_delete_message)
@@ -156,14 +151,14 @@ public class FilenameListActivity extends AppCompatActivity {
                         final AlertDialog dialog = builder.create();
 
                         // Add the buttons
-                        ImageButton btnCancel = (ImageButton) inflate.findViewById(R.id.button_cancel);
+                        ImageButton btnCancel = inflate.findViewById(R.id.button_cancel);
                         btnCancel.setOnClickListener(new View.OnClickListener(){
                             public void onClick(View v) {
                                 dialog.cancel();
                             }
                         });
 
-                        ImageButton btnOk = (ImageButton) inflate.findViewById(R.id.button_ok);
+                        ImageButton btnOk = inflate.findViewById(R.id.button_ok);
                         btnOk.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 File file = new File(getFilesDir() + File.separator + boardgameMini + File.separator, filename);

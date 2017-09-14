@@ -3,7 +3,6 @@ package team.skyzo.shaken.boardgamerandomizer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -26,13 +25,12 @@ import java.util.Random;
  */
 
 public class CharacterListActivity extends AppCompatActivity {
-    final List<CharacterModel> characterList = new ArrayList<>();
-    final List<CharacterModel> charactersSelected = new ArrayList<>();
+    private final List<CharacterModel> characterList = new ArrayList<>();
+    private final List<CharacterModel> charactersSelected = new ArrayList<>();
     private ListView listViewCharacter;
-    private String boardgame;
     private String boardgameMini;
     private String filename;
-    Boolean isMonsters;
+    private Boolean isMonsters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,7 @@ public class CharacterListActivity extends AppCompatActivity {
         listViewCharacter = (ListView) findViewById(R.id.listview);
 
         //get extra declared in previous activity
-        boardgame = getIntent().getStringExtra(Constantes.BOARDGAME);
+        String boardgame = getIntent().getStringExtra(Constantes.BOARDGAME);
         boardgameMini = getIntent().getStringExtra(Constantes.BOARDGAME_MINI);
         filename = getIntent().getStringExtra(Constantes.FILENAME);
 
@@ -127,7 +125,7 @@ public class CharacterListActivity extends AppCompatActivity {
         if (characterList.size() == charactersSelected.size()) {
             v.setVisibility(View.GONE);
             findViewById(R.id.button_pick).setVisibility(View.GONE);
-            int idCharacters = 0;
+            int idCharacters;
             if (isMonsters){
                 idCharacters = getResources().getIdentifier(Constantes.VALUE_STRING + boardgameMini + Constantes.UNDERSCORE + Constantes.MONSTERS, Constantes.VALUE, getPackageName());
             }else {
@@ -182,8 +180,8 @@ public class CharacterListActivity extends AppCompatActivity {
             listViewCharacter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapter, View v, int position, long lg) {
-                    Log.i("MINE", String.valueOf(position));
-                    CharacterModel characterModel = charactersSelected.get(position);
+                    //Log.i("MINE", String.valueOf(position));
+                    //CharacterModel characterModel = charactersSelected.get(position);
                     //Toast.makeText(CharacterListActivity.this, characterModel.getName() + " clicked", Toast.LENGTH_SHORT).show();
                 }
             });
