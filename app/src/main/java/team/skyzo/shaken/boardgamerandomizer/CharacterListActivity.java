@@ -30,7 +30,7 @@ public class CharacterListActivity extends AppCompatActivity {
     private ListView listViewCharacter;
     private String boardgameMini;
     private String filename;
-    private Boolean isMonsters;
+    private Boolean isMonsters = Boolean.FALSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,10 @@ public class CharacterListActivity extends AppCompatActivity {
             isMonsters = Boolean.TRUE;
             ((ImageButton) findViewById(R.id.button_pick)).setImageResource(R.drawable.pick_again_monster1);
             ((ImageButton) findViewById(R.id.button_pick_next)).setImageResource(R.drawable.pick_next_monster1);
+        }else{
+            isMonsters = Boolean.FALSE;
+            ((ImageButton) findViewById(R.id.button_pick)).setImageResource(R.drawable.pick_again_character1);
+            ((ImageButton) findViewById(R.id.button_pick_next)).setImageResource(R.drawable.pick_next_character1);
         }
 
         //récupération du drawable selon le jeu choisi
@@ -69,7 +73,7 @@ public class CharacterListActivity extends AppCompatActivity {
         //choix du character
         randomCharacter();
 
-        if (!isEndList(findViewById(R.id.button_pick_next))) {
+        if (!isEndList()) {
             if (v.getTag().equals(getString(R.string.button_draw))){
                 //button pick next and reset visible
                 findViewById(R.id.button_pick_next).setVisibility(View.VISIBLE);
@@ -78,6 +82,9 @@ public class CharacterListActivity extends AppCompatActivity {
             } else {
                 charactersSelected.remove(lastCharacter);
             }
+        }else{
+            lastCharacter = charactersSelected.size() - 2;
+            charactersSelected.remove(charactersSelected.size() - 2);
         }
 
         ((CharacterListAdapter) listViewCharacter.getAdapter()).updateRecords(charactersSelected);
@@ -87,8 +94,7 @@ public class CharacterListActivity extends AppCompatActivity {
         randomCharacter();
         ((CharacterListAdapter) listViewCharacter.getAdapter()).updateRecords(charactersSelected);
 
-        isEndList(v);
-
+        checkEndListState(v);
         //Display the last element in list
         listViewCharacter.setSelection(charactersSelected.size() - 1);
     }
@@ -121,20 +127,25 @@ public class CharacterListActivity extends AppCompatActivity {
         }
     }
 
-    private Boolean isEndList(View v) {
+    private Boolean isEndList() {
         if (characterList.size() == charactersSelected.size()) {
-            v.setVisibility(View.GONE);
-            findViewById(R.id.button_pick).setVisibility(View.GONE);
-            int idCharacters;
-            if (isMonsters){
-                idCharacters = getResources().getIdentifier(Constantes.VALUE_STRING + boardgameMini + Constantes.UNDERSCORE + Constantes.MONSTERS, Constantes.VALUE, getPackageName());
-            }else {
-                idCharacters = getResources().getIdentifier(Constantes.VALUE_STRING + boardgameMini + Constantes.UNDERSCORE + Constantes.CHARACTERS, Constantes.VALUE, getPackageName());
-            }
-            Toast.makeText(this, getString(R.string.no_more_characters, getString(idCharacters)), Toast.LENGTH_SHORT).show();
             return Boolean.TRUE;
         }else{
             return Boolean.FALSE;
+        }
+    }
+
+    private void checkEndListState(View v) {
+        if (isEndList()){
+            v.setVisibility(View.GONE);
+            findViewById(R.id.button_pick).setVisibility(View.GONE);
+            int idCharacters;
+            if (isMonsters) {
+                idCharacters = getResources().getIdentifier(Constantes.VALUE_STRING + boardgameMini + Constantes.UNDERSCORE + Constantes.MONSTERS, Constantes.VALUE, getPackageName());
+            } else {
+                idCharacters = getResources().getIdentifier(Constantes.VALUE_STRING + boardgameMini + Constantes.UNDERSCORE + Constantes.CHARACTERS, Constantes.VALUE, getPackageName());
+            }
+            Toast.makeText(this, getString(R.string.no_more_characters, getString(idCharacters)), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -173,7 +184,9 @@ public class CharacterListActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             randomCharacter();
-            isEndList(findViewById(R.id.button_pick_next));
+
+            checkEndListState(findViewById(R.id.button_pick_next));
+
             final CharacterListAdapter listViewCharacterAdapter = new CharacterListAdapter(CharacterListActivity.this, charactersSelected);
             listViewCharacter.setAdapter(listViewCharacterAdapter);
 
