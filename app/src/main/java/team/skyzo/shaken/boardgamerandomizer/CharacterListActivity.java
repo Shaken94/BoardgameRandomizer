@@ -84,7 +84,10 @@ public class CharacterListActivity extends AppCompatActivity {
             }
         }else{
             lastCharacter = charactersSelected.size() - 2;
-            charactersSelected.remove(charactersSelected.size() - 2);
+            CharacterModel characterModel = charactersSelected.get(lastCharacter);
+            charactersSelected.remove(lastCharacter);
+            charactersSelected.add(characterModel);
+            checkEndListState(findViewById(R.id.button_pick_next));
         }
 
         ((CharacterListAdapter) listViewCharacter.getAdapter()).updateRecords(charactersSelected);
