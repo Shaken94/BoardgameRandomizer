@@ -50,7 +50,7 @@ public class CharacterListActivity extends AppCompatActivity {
             isMonsters = Boolean.TRUE;
             ((ImageButton) findViewById(R.id.button_pick)).setImageResource(R.drawable.pick_again_monster1);
             ((ImageButton) findViewById(R.id.button_pick_next)).setImageResource(R.drawable.pick_next_monster1);
-        }else{
+        } else {
             isMonsters = Boolean.FALSE;
             ((ImageButton) findViewById(R.id.button_pick)).setImageResource(R.drawable.pick_again_character1);
             ((ImageButton) findViewById(R.id.button_pick_next)).setImageResource(R.drawable.pick_next_character1);
@@ -74,7 +74,7 @@ public class CharacterListActivity extends AppCompatActivity {
         randomCharacter();
 
         if (!isEndList()) {
-            if (v.getTag().equals(getString(R.string.button_draw))){
+            if (v.getTag().equals(getString(R.string.button_draw))) {
                 //button pick next and reset visible
                 findViewById(R.id.button_pick_next).setVisibility(View.VISIBLE);
                 findViewById(R.id.button_reset).setVisibility(View.VISIBLE);
@@ -82,7 +82,7 @@ public class CharacterListActivity extends AppCompatActivity {
             } else {
                 charactersSelected.remove(lastCharacter);
             }
-        }else{
+        } else {
             lastCharacter = charactersSelected.size() - 2;
             CharacterModel characterModel = charactersSelected.get(lastCharacter);
             charactersSelected.remove(lastCharacter);
@@ -133,13 +133,13 @@ public class CharacterListActivity extends AppCompatActivity {
     private Boolean isEndList() {
         if (characterList.size() == charactersSelected.size()) {
             return Boolean.TRUE;
-        }else{
+        } else {
             return Boolean.FALSE;
         }
     }
 
     private void checkEndListState(View v) {
-        if (isEndList()){
+        if (isEndList()) {
             v.setVisibility(View.GONE);
             findViewById(R.id.button_pick).setVisibility(View.GONE);
             int idCharacters;
@@ -164,13 +164,13 @@ public class CharacterListActivity extends AppCompatActivity {
             int resourceId = getResources().getIdentifier(filename, Constantes.RAW, getPackageName());
 
             InputStream iStream = null;
-            if (resourceId ==0){
+            if (resourceId == 0) {
                 try {
                     iStream = new FileInputStream(getFilesDir() + File.separator + boardgameMini + File.separator + filename);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-            }else {
+            } else {
                 iStream = getResources().openRawResource(resourceId);
             }
 
@@ -182,7 +182,6 @@ public class CharacterListActivity extends AppCompatActivity {
 
             return null;
         }
-
 
         @Override
         protected void onPostExecute(Void result) {
